@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 PRACTICUM_TOKEN = os.getenv("PRACTICUM_TOKEN")
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
@@ -30,7 +29,8 @@ def get_homework_statuses(current_timestamp):
 
 
 def send_message(message):
-    #proxy = telegram.utils.request.Request(proxy_url='socks5://85.10.235.14:1080') не поддерживает SSL
+    #proxy = telegram.utils.request.Request(proxy_url='socks5://85.10.235.14:1080') не поддерживает SSL.
+    #Есть способ отключить проверку для telegram.utils.request.Request()?
     proxy = telegram.utils.request.Request(proxy_url='https://183.88.48.104:8080')
     bot = telegram.Bot(token=TELEGRAM_TOKEN, request=proxy)
     return bot.send_message(chat_id=CHAT_ID, text=message)
@@ -44,7 +44,7 @@ def main():
             new_homework = get_homework_statuses(current_timestamp)
             if new_homework.get('homeworks'):
                 send_message(parse_homework_status(new_homework.get('homeworks')[0]))
-            current_timestamp = new_homework.get('current_date')  # обновить timestamp
+            current_timestamp = new_homework.get('current_date') # обновить timestamp
             time.sleep(60*20)  # опрашивать раз в двадцать минут
 
         except Exception as e:
