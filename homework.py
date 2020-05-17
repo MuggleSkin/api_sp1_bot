@@ -29,10 +29,9 @@ def get_homework_statuses(current_timestamp):
 
 
 def send_message(message):
-    #proxy = telegram.utils.request.Request(proxy_url='socks5://85.10.235.14:1080') не поддерживает SSL.
-    #Есть способ отключить проверку для telegram.utils.request.Request()?
-    proxy = telegram.utils.request.Request(proxy_url='https://183.88.48.104:8080')
-    bot = telegram.Bot(token=TELEGRAM_TOKEN, request=proxy)
+    #proxy = telegram.utils.request.Request(proxy_url='socks5://85.10.235.14:1080')
+    #proxy = telegram.utils.request.Request(proxy_url='https://183.88.48.104:8080')
+    bot = telegram.Bot(token=TELEGRAM_TOKEN)
     return bot.send_message(chat_id=CHAT_ID, text=message)
 
 
